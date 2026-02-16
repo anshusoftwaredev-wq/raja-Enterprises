@@ -58,7 +58,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, userMode, onA
         <div className="flex items-end justify-between">
           <div>
             <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">{isWholesale ? 'Wholesale Rate' : 'Price'}</p>
-            <p className="text-slate-900 font-black text-2xl tracking-tighter">${price}</p>
+            <p className="text-slate-900 font-black text-2xl tracking-tighter">₹{price.toLocaleString()}</p>
           </div>
           {isWholesale && (
             <div className="text-right">

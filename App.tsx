@@ -4,6 +4,8 @@ import { Navbar } from './components/Navbar';
 import { ProductCard } from './components/ProductCard';
 import { AIChatBot } from './components/AIChatBot';
 import { B2BDashboard } from './components/B2BDashboard';
+import { AdminPanel } from './components/AdminPanel';
+import { ProductDetail } from './components/ProductDetail';
 import { products } from './data/products';
 import { Product, CartItem, UserMode } from './types';
 import { ArrowRight, ChevronRight, X, Smartphone, ShieldCheck, Zap, Globe, MessageCircle } from 'lucide-react';
@@ -14,6 +16,7 @@ const App: React.FC = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
+  const [isAdminPanelOpen, setIsAdminPanelOpen] = useState(false);
 
   const addToCart = (product: Product) => {
     const minQty = userMode === 'wholesale' ? product.moq : 1;
@@ -40,9 +43,8 @@ const App: React.FC = () => {
   
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
-  // Auto-switch mode toast/logic
   useEffect(() => {
-    setCart([]); // Reset cart when mode changes for safety
+    setCart([]);
   }, [userMode]);
 
   return (
@@ -53,6 +55,7 @@ const App: React.FC = () => {
         userMode={userMode}
         onToggleMode={() => setUserMode(userMode === 'retail' ? 'wholesale' : 'retail')}
         onDashboardClick={() => setIsDashboardOpen(true)}
+        onAdminClick={() => setIsAdminPanelOpen(true)}
       />
 
       {/* Hero Section */}
@@ -68,7 +71,7 @@ const App: React.FC = () => {
             </h1>
             <p className="text-lg text-slate-500 mb-10 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
               {userMode === 'wholesale' 
-                ? 'Join 500+ retailers sourcing the highest quality mobile products at unbeatable bulk rates. GST invoices and credit terms available.' 
+                ? 'Join 500+ retailers sourcing the highest quality mobile products at unbeatable bulk rates from Raja Enterprises.' 
                 : 'Experience mobile technology like never before. From the latest flagships to bespoke accessories, Raja Enterprises is your digital partner.'}
             </p>
             <div className="flex flex-wrap justify-center lg:justify-start gap-5">
@@ -148,69 +151,32 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* WhatsApp Support Button */}
+      {/* WhatsApp Support Button - Floating Left */}
       <a 
         href="https://wa.me/91XXXXXXXXXX" 
         target="_blank" 
         rel="noopener noreferrer"
-        className="fixed bottom-24 right-6 z-50 bg-emerald-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform group"
+        className="fixed bottom-6 left-6 z-50 bg-emerald-500 text-white p-5 rounded-full shadow-2xl hover:scale-110 transition-transform group flex items-center justify-center border-4 border-white"
       >
-        <MessageCircle className="w-6 h-6" />
-        <span className="absolute right-full mr-3 bg-white text-slate-900 px-4 py-2 rounded-2xl text-xs font-bold shadow-xl border border-slate-100 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+        <MessageCircle className="w-7 h-7" />
+        <span className="absolute left-full ml-4 bg-white text-slate-900 px-4 py-2 rounded-2xl text-xs font-black shadow-2xl border border-slate-100 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap uppercase tracking-widest">
           Order on WhatsApp
         </span>
       </a>
 
-      <AIChatBot />
+      <AIChatBot mode={userMode} />
 
       {isDashboardOpen && <B2BDashboard onClose={() => setIsDashboardOpen(false)} />}
+      
+      {isAdminPanelOpen && <AdminPanel onClose={() => setIsAdminPanelOpen(false)} />}
 
-      {/* Product Detail Modal */}
       {selectedProduct && (
-        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-md" onClick={() => setSelectedProduct(null)}></div>
-          <div className="relative bg-white rounded-[3rem] shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto flex flex-col lg:flex-row border border-white/20">
-            <button 
-              onClick={() => setSelectedProduct(null)}
-              className="absolute top-6 right-6 p-3 bg-slate-100 rounded-full hover:bg-slate-200 transition-all z-10"
-            >
-              <X className="w-6 h-6" />
-            </button>
-            <div className="w-full lg:w-1/2 bg-slate-50 p-12 flex items-center justify-center">
-              <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full max-w-sm rounded-[2.5rem] shadow-2xl rotate-2" />
-            </div>
-            <div className="w-full lg:w-1/2 p-12">
-              <span className="text-indigo-600 font-black uppercase tracking-[0.3em] text-[10px]">{selectedProduct.brand}</span>
-              <h2 className="text-4xl font-black text-slate-900 mt-2 mb-6 tracking-tighter">{selectedProduct.name}</h2>
-              <p className="text-slate-500 font-medium leading-relaxed mb-8">{selectedProduct.description}</p>
-              
-              <div className="space-y-6 mb-10">
-                <h4 className="font-black text-slate-900 uppercase tracking-widest text-[10px]">Specifications</h4>
-                <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-                  {Object.entries(selectedProduct.specs).map(([key, val]) => (
-                    <div key={key} className="text-sm">
-                      <p className="text-slate-400 font-bold uppercase text-[9px] mb-1">{key}</p>
-                      <p className="text-slate-900 font-bold">{val}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row items-center justify-between pt-10 border-t border-slate-100 gap-6">
-                <div>
-                  <p className="text-[10px] font-black text-slate-400 uppercase mb-1">{userMode === 'wholesale' ? 'Wholesale Price (Per Unit)' : 'Best Buy Price'}</p>
-                  <p className="text-4xl font-black text-slate-900 tracking-tighter">${userMode === 'wholesale' ? selectedProduct.wholesalePrice : selectedProduct.retailPrice}</p>
-                </div>
-                <button 
-                  onClick={() => { addToCart(selectedProduct); setSelectedProduct(null); }}
-                  className="w-full sm:w-auto bg-indigo-600 text-white px-12 py-5 rounded-[2rem] font-black hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-600/20 tracking-tight"
-                >
-                  {userMode === 'wholesale' ? `Add ${selectedProduct.moq} (Min. Qty)` : 'Add to Bag'}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ProductDetail 
+          product={selectedProduct} 
+          userMode={userMode} 
+          onClose={() => setSelectedProduct(null)} 
+          onAddToCart={(p) => { addToCart(p); setSelectedProduct(null); }}
+        />
       )}
 
       {/* Shopping Cart Drawer */}
@@ -248,7 +214,7 @@ const App: React.FC = () => {
                       <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">{item.product.brand}</p>
                       <div className="flex justify-between items-center mt-auto">
                         <span className="text-sm font-black text-slate-900 bg-slate-100 px-3 py-1 rounded-lg">Qty: {item.quantity}</span>
-                        <span className="font-black text-slate-900 text-lg">${(userMode === 'wholesale' ? item.product.wholesalePrice : item.product.retailPrice) * item.quantity}</span>
+                        <span className="font-black text-slate-900 text-lg">₹{((userMode === 'wholesale' ? item.product.wholesalePrice : item.product.retailPrice) * item.quantity).toLocaleString()}</span>
                       </div>
                     </div>
                   </div>
@@ -260,7 +226,7 @@ const App: React.FC = () => {
               <div className="space-y-3 mb-8">
                 <div className="flex justify-between items-center text-sm font-bold text-slate-500 uppercase tracking-widest">
                   <span>Subtotal</span>
-                  <span className="text-slate-900">${cartTotal.toLocaleString()}</span>
+                  <span className="text-slate-900">₹{cartTotal.toLocaleString()}</span>
                 </div>
                 {userMode === 'wholesale' && (
                   <div className="flex justify-between items-center text-xs font-bold text-emerald-600 uppercase tracking-widest">
@@ -270,7 +236,7 @@ const App: React.FC = () => {
                 )}
                 <div className="flex justify-between items-center pt-4 border-t border-slate-200">
                   <span className="text-slate-900 font-black text-xl tracking-tighter">Total Amount</span>
-                  <span className="text-3xl font-black text-slate-900 tracking-tighter">${(cartTotal * (userMode === 'wholesale' ? 1.18 : 1)).toLocaleString()}</span>
+                  <span className="text-3xl font-black text-slate-900 tracking-tighter">₹{(cartTotal * (userMode === 'wholesale' ? 1.18 : 1)).toLocaleString()}</span>
                 </div>
               </div>
               <button 

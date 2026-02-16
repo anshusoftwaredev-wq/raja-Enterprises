@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ShoppingCart, User, Smartphone, Building2, Store } from 'lucide-react';
+import { ShoppingCart, User, Smartphone, Building2, Store, ShieldCheck } from 'lucide-react';
 import { UserMode } from '../types';
 
 interface NavbarProps {
@@ -9,9 +9,10 @@ interface NavbarProps {
   userMode: UserMode;
   onToggleMode: () => void;
   onDashboardClick: () => void;
+  onAdminClick: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ cartCount, onCartClick, userMode, onToggleMode, onDashboardClick }) => {
+export const Navbar: React.FC<NavbarProps> = ({ cartCount, onCartClick, userMode, onToggleMode, onDashboardClick, onAdminClick }) => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -22,7 +23,7 @@ export const Navbar: React.FC<NavbarProps> = ({ cartCount, onCartClick, userMode
             </div>
             <div className="flex flex-col">
               <span className="text-lg font-black tracking-tighter text-slate-900 leading-none">
-                RAJA <span className="text-indigo-600">ENT.</span>
+                RAJA <span className="text-indigo-600">ENTERPRISES</span>
               </span>
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Premium Mobile Hub</span>
             </div>
@@ -44,6 +45,12 @@ export const Navbar: React.FC<NavbarProps> = ({ cartCount, onCartClick, userMode
           </div>
 
           <div className="flex items-center space-x-2 md:space-x-4">
+            <button 
+              onClick={onAdminClick}
+              className="hidden lg:flex items-center gap-2 px-4 py-2 text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-full text-xs font-black uppercase tracking-widest transition-colors border border-indigo-100"
+            >
+              <ShieldCheck className="w-4 h-4" /> Admin
+            </button>
             {userMode === 'wholesale' && (
               <button 
                 onClick={onDashboardClick}

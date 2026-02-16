@@ -1,6 +1,6 @@
 {
-  "name": "Raja Enterprises - Premium Mobile & Accessories",
-  "description": "A high-end eCommerce platform for Raja Enterprises specializing in mobile phones and accessories with AI-powered shopping assistance.",
+  "name": "Raja Enterprises",
+  "description": "A high-end eCommerce platform for Raja Enterprises specializing in mobile phones and accessories with AI-powered shopping assistance and B2B capabilities.",
   "requestFramePermissions": [
     "camera",
     "microphone"

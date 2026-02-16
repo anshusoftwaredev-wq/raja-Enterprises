@@ -42,9 +42,9 @@ export const B2BDashboard: React.FC<{ onClose: () => void }> = ({ onClose }) => 
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
             {[
-              { label: 'Total Volume', value: '$14,200', color: 'bg-indigo-50 text-indigo-600' },
-              { label: 'Available Credit', value: '$5,000', color: 'bg-emerald-50 text-emerald-600' },
-              { label: 'Pending GST', value: '$420.50', color: 'bg-amber-50 text-amber-600' },
+              { label: 'Total Volume', value: '₹14,20,000', color: 'bg-indigo-50 text-indigo-600' },
+              { label: 'Available Credit', value: '₹5,00,000', color: 'bg-emerald-50 text-emerald-600' },
+              { label: 'Pending GST', value: '₹42,050', color: 'bg-amber-50 text-amber-600' },
             ].map((stat, i) => (
               <div key={i} className={`${stat.color} p-6 rounded-[2rem] border border-current/10`}>
                 <p className="text-[10px] font-black uppercase tracking-widest mb-2 opacity-80">{stat.label}</p>
@@ -71,7 +71,7 @@ export const B2BDashboard: React.FC<{ onClose: () => void }> = ({ onClose }) => 
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <p className="font-black text-slate-900 tracking-tighter">$2,450.00</p>
+                    <p className="font-black text-slate-900 tracking-tighter">₹2,45,000.00</p>
                     <ChevronRight className="w-5 h-5 text-slate-300 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all" />
                   </div>
                 </div>
