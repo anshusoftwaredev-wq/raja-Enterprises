@@ -5,6 +5,10 @@ import { ProductCard } from './components/ProductCard';
 import { AIChatBot } from './components/AIChatBot';
 import { B2BDashboard } from './components/B2BDashboard';
 import { AdminPanel } from './components/AdminPanel';
+import { ProfilePage } from './components/ProfilePage';
+import { Checkout } from './components/Checkout';
+import { PaymentSuccess } from './components/PaymentSuccess';
+import { TrackOrder } from './components/TrackOrder';
 import { ProductDetail } from './components/ProductDetail';
 import { products } from './data/products';
 import { Product, CartItem, UserMode } from './types';
@@ -17,6 +21,12 @@ const App: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
   const [isAdminPanelOpen, setIsAdminPanelOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [isPaymentSuccessOpen, setIsPaymentSuccessOpen] = useState(false);
+  const [isTrackOrderOpen, setIsTrackOrderOpen] = useState(false);
+  const [lastOrderId, setLastOrderId] = useState('');
+  const [wishlist, setWishlist] = useState<string[]>([]);
 
   const addToCart = (product: Product) => {
     const minQty = userMode === 'wholesale' ? product.moq : 1;
@@ -34,6 +44,14 @@ const App: React.FC = () => {
 
   const removeFromCart = (id: string) => {
     setCart(prev => prev.filter(item => item.product.id !== id));
+  };
+
+  const toggleWishlist = (productId: string) => {
+    setWishlist(prev => 
+      prev.includes(productId) 
+        ? prev.filter(id => id !== productId) 
+        : [...prev, productId]
+    );
   };
 
   const cartTotal = cart.reduce((acc, item) => {
@@ -56,6 +74,7 @@ const App: React.FC = () => {
         onToggleMode={() => setUserMode(userMode === 'retail' ? 'wholesale' : 'retail')}
         onDashboardClick={() => setIsDashboardOpen(true)}
         onAdminClick={() => setIsAdminPanelOpen(true)}
+        onProfileClick={() => setIsProfileOpen(true)}
       />
 
       {/* Hero Section */}
@@ -146,6 +165,8 @@ const App: React.FC = () => {
               userMode={userMode}
               onAddToCart={addToCart}
               onViewDetails={setSelectedProduct}
+              onToggleWishlist={toggleWishlist}
+              isInWishlist={wishlist.includes(product.id)}
             />
           ))}
         </div>
@@ -169,6 +190,51 @@ const App: React.FC = () => {
       {isDashboardOpen && <B2BDashboard onClose={() => setIsDashboardOpen(false)} />}
       
       {isAdminPanelOpen && <AdminPanel onClose={() => setIsAdminPanelOpen(false)} />}
+      
+      {isProfileOpen && (
+        <ProfilePage 
+          onClose={() => setIsProfileOpen(false)} 
+          userMode={userMode} 
+          wishlist={wishlist}
+          products={products}
+          onToggleWishlist={toggleWishlist}
+          onAddToCart={addToCart}
+        />
+      )}
+
+      {isCheckoutOpen && (
+        <Checkout 
+          items={cart} 
+          total={cartTotal * (userMode === 'wholesale' ? 1.18 : 1)} 
+          userMode={userMode} 
+          onClose={() => setIsCheckoutOpen(false)} 
+          onSuccess={(orderId) => {
+            setLastOrderId(orderId);
+            setIsCheckoutOpen(false);
+            setIsPaymentSuccessOpen(true);
+            setCart([]);
+          }}
+        />
+      )}
+
+      {isPaymentSuccessOpen && (
+        <PaymentSuccess 
+          orderId={lastOrderId} 
+          total={cartTotal * (userMode === 'wholesale' ? 1.18 : 1)} 
+          onClose={() => setIsPaymentSuccessOpen(false)} 
+          onTrack={() => {
+            setIsPaymentSuccessOpen(false);
+            setIsTrackOrderOpen(true);
+          }}
+        />
+      )}
+
+      {isTrackOrderOpen && (
+        <TrackOrder 
+          orderId={lastOrderId} 
+          onClose={() => setIsTrackOrderOpen(false)} 
+        />
+      )}
 
       {selectedProduct && (
         <ProductDetail 
@@ -176,6 +242,8 @@ const App: React.FC = () => {
           userMode={userMode} 
           onClose={() => setSelectedProduct(null)} 
           onAddToCart={(p) => { addToCart(p); setSelectedProduct(null); }}
+          onToggleWishlist={toggleWishlist}
+          isInWishlist={wishlist.includes(selectedProduct.id)}
         />
       )}
 
@@ -241,6 +309,10 @@ const App: React.FC = () => {
               </div>
               <button 
                 disabled={cart.length === 0}
+                onClick={() => {
+                  setIsCartOpen(false);
+                  setIsCheckoutOpen(true);
+                }}
                 className={`w-full py-6 rounded-[2rem] font-black text-white shadow-2xl transition-all disabled:opacity-50 disabled:cursor-not-allowed ${userMode === 'wholesale' ? 'bg-indigo-600 hover:bg-indigo-700 shadow-indigo-600/20' : 'bg-slate-900 hover:bg-slate-800 shadow-slate-900/20'}`}
               >
                 {userMode === 'wholesale' ? 'Confirm Bulk Order' : 'Proceed to Checkout'}

@@ -10,9 +10,10 @@ interface NavbarProps {
   onToggleMode: () => void;
   onDashboardClick: () => void;
   onAdminClick: () => void;
+  onProfileClick: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ cartCount, onCartClick, userMode, onToggleMode, onDashboardClick, onAdminClick }) => {
+export const Navbar: React.FC<NavbarProps> = ({ cartCount, onCartClick, userMode, onToggleMode, onDashboardClick, onAdminClick, onProfileClick }) => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -59,7 +60,10 @@ export const Navbar: React.FC<NavbarProps> = ({ cartCount, onCartClick, userMode
                 Dashboard
               </button>
             )}
-            <button className="p-2.5 text-slate-600 hover:bg-slate-100 rounded-full transition-colors">
+            <button 
+              onClick={onProfileClick}
+              className="p-2.5 text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
+            >
               <User className="w-5 h-5" />
             </button>
             <button 

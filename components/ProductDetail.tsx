@@ -3,7 +3,7 @@ import React from 'react';
 import { 
   X, ShoppingBag, ShieldCheck, Truck, RefreshCw, 
   Cpu, Smartphone, Camera, Battery, Star, 
-  ChevronRight, BadgePercent, Building2
+  ChevronRight, BadgePercent, Building2, Heart
 } from 'lucide-react';
 import { Product, UserMode } from '../types';
 
@@ -12,9 +12,18 @@ interface ProductDetailProps {
   userMode: UserMode;
   onClose: () => void;
   onAddToCart: (p: Product) => void;
+  onToggleWishlist: (id: string) => void;
+  isInWishlist: boolean;
 }
 
-export const ProductDetail: React.FC<ProductDetailProps> = ({ product, userMode, onClose, onAddToCart }) => {
+export const ProductDetail: React.FC<ProductDetailProps> = ({ 
+  product, 
+  userMode, 
+  onClose, 
+  onAddToCart,
+  onToggleWishlist,
+  isInWishlist
+}) => {
   const isWholesale = userMode === 'wholesale';
   const price = isWholesale ? product.wholesalePrice : product.retailPrice;
 
@@ -128,13 +137,22 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ product, userMode,
               </div>
             </div>
             
-            <button 
-              onClick={() => onAddToCart(product)}
-              className="w-full sm:w-auto flex items-center justify-center gap-3 bg-indigo-600 text-white px-10 py-5 rounded-[2rem] font-black hover:bg-indigo-700 transition-all shadow-2xl shadow-indigo-600/30 active:scale-95 group"
-            >
-              <ShoppingBag className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
-              {isWholesale ? `Order Bulk (Min. ${product.moq})` : 'Secure This Device'}
-            </button>
+            <div className="flex gap-4 w-full sm:w-auto">
+              <button 
+                onClick={() => onToggleWishlist(product.id)}
+                className={`p-5 rounded-[2rem] border-2 transition-all active:scale-95 ${isInWishlist ? 'bg-rose-50 border-rose-100 text-rose-500' : 'bg-white border-slate-100 text-slate-400 hover:text-rose-500 hover:border-rose-100'}`}
+              >
+                <Heart className={`w-6 h-6 ${isInWishlist ? 'fill-current' : ''}`} />
+              </button>
+              
+              <button 
+                onClick={() => onAddToCart(product)}
+                className="flex-1 sm:flex-none flex items-center justify-center gap-3 bg-indigo-600 text-white px-10 py-5 rounded-[2rem] font-black hover:bg-indigo-700 transition-all shadow-2xl shadow-indigo-600/30 active:scale-95 group"
+              >
+                <ShoppingBag className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
+                {isWholesale ? `Order Bulk (Min. ${product.moq})` : 'Secure This Device'}
+              </button>
+            </div>
           </div>
           
           {/* Shipping Info */}

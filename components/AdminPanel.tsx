@@ -97,7 +97,7 @@ export const AdminPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             </div>
             <button 
               type="submit"
-              className="w-full bg-indigo-600 text-white py-4 rounded-2xl font-black shadow-xl shadow-indigo-600/20 hover:bg-indigo-700 transition-all flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-slate-50 via-slate-400 to-slate-900 text-white py-4 rounded-2xl font-black shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 active:scale-95"
             >
               <LogIn className="w-5 h-5" /> Sign In to Dashboard
             </button>

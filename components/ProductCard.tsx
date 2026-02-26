@@ -1,16 +1,25 @@
 
 import React from 'react';
 import { Product, UserMode } from '../types';
-import { Plus, Info, Layers } from 'lucide-react';
+import { Plus, Info, Layers, Heart } from 'lucide-react';
 
 interface ProductCardProps {
   product: Product;
   userMode: UserMode;
   onAddToCart: (p: Product) => void;
   onViewDetails: (p: Product) => void;
+  onToggleWishlist: (id: string) => void;
+  isInWishlist: boolean;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product, userMode, onAddToCart, onViewDetails }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ 
+  product, 
+  userMode, 
+  onAddToCart, 
+  onViewDetails,
+  onToggleWishlist,
+  isInWishlist
+}) => {
   const isWholesale = userMode === 'wholesale';
   const price = isWholesale ? product.wholesalePrice : product.retailPrice;
 
@@ -28,6 +37,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, userMode, onA
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
         />
+        <button 
+          onClick={() => onToggleWishlist(product.id)}
+          className={`absolute top-4 right-4 z-10 p-3 rounded-2xl shadow-xl transition-all active:scale-95 ${isInWishlist ? 'bg-rose-500 text-white' : 'bg-white/80 backdrop-blur-sm text-slate-400 hover:text-rose-500'}`}
+        >
+          <Heart className={`w-5 h-5 ${isInWishlist ? 'fill-current' : ''}`} />
+        </button>
         <div className="absolute inset-0 bg-indigo-900/0 group-hover:bg-indigo-900/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100 gap-3">
           <button 
             onClick={() => onViewDetails(product)}
