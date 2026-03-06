@@ -21,11 +21,11 @@ export const TrackOrder: React.FC<TrackOrderProps> = ({ orderId, onClose }) => {
   ];
 
   return (
-    <div className="fixed inset-0 z-[170] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[170] flex items-center justify-center lg:p-4">
       <div className="absolute inset-0 bg-slate-900/90 backdrop-blur-md" onClick={onClose}></div>
-      <div className="relative bg-white rounded-[3rem] shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col border border-white/20 animate-slide-up">
+      <div className="relative bg-white lg:rounded-[3rem] shadow-2xl w-full h-full lg:h-auto lg:max-w-4xl lg:max-h-[90vh] overflow-hidden flex flex-col border border-white/20 animate-slide-up">
         
-        <div className="p-10 lg:p-16 border-b border-slate-100 flex justify-between items-center bg-white">
+        <div className="p-8 lg:p-16 border-b border-slate-100 flex justify-between items-center bg-white shrink-0">
           <div className="flex items-center gap-6">
             <button onClick={onClose} className="p-3 bg-slate-50 rounded-2xl hover:bg-slate-100 transition-colors">
               <ArrowLeft className="w-6 h-6 text-slate-900" />

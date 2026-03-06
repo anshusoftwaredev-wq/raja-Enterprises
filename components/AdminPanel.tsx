@@ -112,12 +112,12 @@ export const AdminPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   }
 
   return (
-    <div className="fixed inset-0 z-[130] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[130] flex items-center justify-center lg:p-4">
       <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-xl" onClick={onClose}></div>
-      <div className="relative bg-white rounded-[3rem] shadow-2xl w-full max-w-7xl max-h-[95vh] overflow-hidden flex flex-col md:flex-row border border-white/20">
+      <div className="relative bg-white lg:rounded-[3rem] shadow-2xl w-full h-full lg:h-auto lg:max-w-7xl lg:max-h-[95vh] overflow-hidden flex flex-col md:flex-row border border-white/20">
         
         {/* Sidebar */}
-        <div className="w-full md:w-72 bg-slate-900 text-white p-8 flex flex-col">
+        <div className="w-full md:w-72 bg-slate-900 text-white p-8 flex flex-col overflow-y-auto">
           <div className="mb-12">
             <h2 className="text-2xl font-black tracking-tighter">RAJA <span className="text-indigo-400">ADMIN</span></h2>
             <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mt-1">Control Center</p>

@@ -35,16 +35,22 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 sm:p-6 lg:p-8 animate-in fade-in duration-300">
-      <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-xl" onClick={onClose}></div>
-      
-      <div className="relative bg-white rounded-[2.5rem] lg:rounded-[4rem] shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col lg:flex-row border border-white/20 animate-in slide-in-from-bottom-8 duration-500">
-        {/* Close Button */}
+    <div className="min-h-screen bg-white animate-in fade-in duration-500">
+      <div className="relative bg-white w-full min-h-screen overflow-hidden flex flex-col lg:flex-row">
+        {/* Back Button */}
         <button 
           onClick={onClose}
-          className="absolute top-6 right-6 lg:top-10 lg:right-10 p-3 bg-white/80 backdrop-blur shadow-xl rounded-full hover:bg-white transition-all z-20 group"
+          className="absolute top-6 left-6 p-4 bg-white/80 backdrop-blur shadow-xl rounded-full hover:bg-white transition-all z-20 group"
         >
-          <X className="w-6 h-6 text-slate-900 group-hover:rotate-90 transition-transform" />
+          <ChevronRight className="w-6 h-6 text-slate-900 rotate-180 group-hover:-translate-x-1 transition-transform" />
+        </button>
+
+        {/* Wishlist Button (Top Right) */}
+        <button 
+          onClick={() => onToggleWishlist(product.id)}
+          className={`absolute top-6 right-6 p-4 rounded-full shadow-xl z-20 transition-all active:scale-90 ${isInWishlist ? 'bg-rose-500 text-white' : 'bg-white/80 backdrop-blur text-slate-400'}`}
+        >
+          <Heart className={`w-6 h-6 ${isInWishlist ? 'fill-current' : ''}`} />
         </button>
 
         {/* Left: Image Gallery (Simplified) */}
@@ -137,19 +143,12 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
               </div>
             </div>
             
-            <div className="flex gap-4 w-full sm:w-auto">
-              <button 
-                onClick={() => onToggleWishlist(product.id)}
-                className={`p-5 rounded-[2rem] border-2 transition-all active:scale-95 ${isInWishlist ? 'bg-rose-50 border-rose-100 text-rose-500' : 'bg-white border-slate-100 text-slate-400 hover:text-rose-500 hover:border-rose-100'}`}
-              >
-                <Heart className={`w-6 h-6 ${isInWishlist ? 'fill-current' : ''}`} />
-              </button>
-              
+            <div className="flex gap-4 w-full">
               <button 
                 onClick={() => onAddToCart(product)}
-                className="flex-1 sm:flex-none flex items-center justify-center gap-3 bg-indigo-600 text-white px-10 py-5 rounded-[2rem] font-black hover:bg-indigo-700 transition-all shadow-2xl shadow-indigo-600/30 active:scale-95 group"
+                className="flex-1 flex items-center justify-center gap-3 bg-indigo-600 text-white px-10 py-6 rounded-[2rem] font-black hover:bg-indigo-700 transition-all shadow-2xl shadow-indigo-600/30 active:scale-95 group"
               >
-                <ShoppingBag className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
+                <ShoppingBag className="w-6 h-6 group-hover:-translate-y-1 transition-transform" />
                 {isWholesale ? `Order Bulk (Min. ${product.moq})` : 'Secure This Device'}
               </button>
             </div>

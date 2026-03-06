@@ -35,45 +35,42 @@ export const AIChatBot: React.FC<{ mode?: UserMode }> = ({ mode = 'retail' }) =>
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[100]">
+    <div className="fixed bottom-24 lg:bottom-6 right-6 z-[100]">
       {!isOpen ? (
         <button 
           onClick={() => setIsOpen(true)}
-          className="bg-slate-900 text-white p-5 rounded-3xl shadow-2xl hover:scale-110 transition-all flex items-center gap-3 group border-4 border-white"
+          className="bg-indigo-600 text-white p-4 rounded-[1.5rem] shadow-2xl hover:scale-110 transition-all flex items-center gap-3 group border-4 border-white active:scale-95"
         >
           <div className="relative">
-            <MessageSquare className="w-6 h-6" />
-            <div className="absolute -top-1 -right-1 w-3 h-3 bg-indigo-500 rounded-full animate-pulse border-2 border-slate-900"></div>
+            <MessageSquare className="w-6 h-6 fill-current" />
+            <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full animate-pulse border-2 border-indigo-600"></div>
           </div>
           <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 whitespace-nowrap font-black text-xs uppercase tracking-widest pr-2">
             AI Assistant
           </span>
         </button>
       ) : (
-        <div className="bg-white rounded-[2.5rem] shadow-2xl w-[90vw] sm:w-[400px] border border-slate-100 flex flex-col h-[600px] overflow-hidden animate-slide-up">
-          <div className="bg-slate-900 p-6 text-white flex justify-between items-center">
+        <div className="bg-white rounded-[2rem] shadow-2xl w-[90vw] sm:w-[400px] border border-slate-100 flex flex-col h-[70vh] lg:h-[600px] overflow-hidden animate-slide-up">
+          <div className="bg-white p-5 text-slate-900 flex justify-between items-center border-b border-slate-100">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-indigo-600 rounded-xl">
-                <Bot className="w-5 h-5 text-white" />
+              <div className="p-2.5 bg-indigo-50 rounded-2xl">
+                <Bot className="w-6 h-6 text-indigo-600" />
               </div>
               <div>
                 <p className="font-black tracking-tight text-lg leading-none">Raja Assistant</p>
-                <p className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest mt-1">Live Intelligence</p>
+                <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mt-1">Online • Gemini Core</p>
               </div>
             </div>
-            <button onClick={() => setIsOpen(false)} className="hover:bg-white/10 p-2 rounded-full transition-colors">
-              <X className="w-5 h-5" />
+            <button onClick={() => setIsOpen(false)} className="hover:bg-slate-100 p-2 rounded-full transition-colors">
+              <X className="w-6 h-6 text-slate-400" />
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-slate-50/30" ref={scrollRef}>
+          <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-slate-50/50" ref={scrollRef}>
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`flex gap-3 max-w-[90%] ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
-                  <div className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 shadow-sm ${msg.role === 'user' ? 'bg-indigo-600' : 'bg-white'}`}>
-                    {msg.role === 'user' ? <User className="w-5 h-5 text-white" /> : <Bot className="w-5 h-5 text-indigo-600" />}
-                  </div>
-                  <div className={`p-4 rounded-3xl text-sm leading-relaxed ${msg.role === 'user' ? 'bg-slate-900 text-white rounded-tr-none' : 'bg-white text-slate-800 rounded-tl-none border border-slate-100 shadow-sm'}`}>
+                <div className={`flex gap-2 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                  <div className={`p-4 rounded-[1.5rem] text-sm leading-relaxed ${msg.role === 'user' ? 'bg-indigo-600 text-white rounded-tr-none shadow-md' : 'bg-white text-slate-800 rounded-tl-none border border-slate-100 shadow-sm'}`}>
                     {msg.text}
                   </div>
                 </div>
@@ -81,7 +78,7 @@ export const AIChatBot: React.FC<{ mode?: UserMode }> = ({ mode = 'retail' }) =>
             ))}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="flex gap-2 items-center bg-white p-4 rounded-3xl rounded-tl-none border border-slate-100">
+                <div className="flex gap-2 items-center bg-white p-4 rounded-[1.5rem] rounded-tl-none border border-slate-100">
                   <div className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"></div>
                   <div className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce delay-100"></div>
                   <div className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce delay-200"></div>
@@ -90,28 +87,23 @@ export const AIChatBot: React.FC<{ mode?: UserMode }> = ({ mode = 'retail' }) =>
             )}
           </div>
 
-          <div className="p-6 border-t border-slate-100 bg-white">
-            <div className="flex gap-3 bg-slate-50 p-2 rounded-3xl border border-slate-200 focus-within:ring-2 focus-within:ring-indigo-500 transition-all">
+          <div className="p-4 bg-white">
+            <div className="flex gap-2 bg-slate-100 p-1.5 rounded-[1.5rem] border border-slate-200 focus-within:ring-2 focus-within:ring-indigo-500 transition-all">
               <input 
                 type="text" 
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="Message assistant..."
-                className="flex-1 bg-transparent border-none rounded-full px-4 py-3 text-sm focus:outline-none font-medium"
+                placeholder="Ask anything..."
+                className="flex-1 bg-transparent border-none rounded-full px-4 py-3 text-sm focus:outline-none font-medium text-slate-900"
               />
               <button 
                 onClick={handleSend}
                 disabled={isLoading || !input.trim()}
-                className="bg-indigo-600 text-white p-3 rounded-2xl hover:bg-indigo-700 disabled:opacity-50 transition-all shadow-lg shadow-indigo-600/20"
+                className="bg-indigo-600 text-white p-3 rounded-2xl hover:bg-indigo-700 disabled:opacity-50 transition-all shadow-lg shadow-indigo-600/20 active:scale-90"
               >
-                <Send className="w-4 h-4" />
+                <Send className="w-5 h-5" />
               </button>
-            </div>
-            <div className="flex justify-center mt-4">
-              <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1">
-                <Sparkles className="w-3 h-3" /> Powered by Raja Gemini Core
-              </p>
             </div>
           </div>
         </div>

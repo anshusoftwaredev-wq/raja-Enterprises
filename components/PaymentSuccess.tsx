@@ -15,11 +15,11 @@ interface PaymentSuccessProps {
 
 export const PaymentSuccess: React.FC<PaymentSuccessProps> = ({ orderId, total, onClose, onTrack }) => {
   return (
-    <div className="fixed inset-0 z-[160] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[160] flex items-center justify-center lg:p-4">
       <div className="absolute inset-0 bg-slate-900/95 backdrop-blur-xl" onClick={onClose}></div>
-      <div className="relative bg-white rounded-[4rem] shadow-2xl w-full max-w-2xl overflow-hidden p-12 text-center animate-slide-up border border-white/20">
+      <div className="relative bg-white lg:rounded-[4rem] shadow-2xl w-full h-full lg:h-auto lg:max-w-2xl overflow-y-auto p-12 text-center animate-slide-up border border-white/20">
         
-        <div className="inline-flex p-8 bg-emerald-50 rounded-[3rem] mb-10 relative">
+        <div className="inline-flex p-8 bg-emerald-50 rounded-[3rem] mb-10 relative mt-12 lg:mt-0">
           <CheckCircle2 className="w-20 h-20 text-emerald-500" />
           <div className="absolute -top-2 -right-2 bg-indigo-600 text-white p-3 rounded-2xl shadow-xl animate-bounce">
             <ShieldCheck className="w-6 h-6" />

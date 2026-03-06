@@ -28,12 +28,12 @@ export const Checkout: React.FC<CheckoutProps> = ({ items, total, userMode, onCl
   };
 
   return (
-    <div className="fixed inset-0 z-[150] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[150] flex items-center justify-center lg:p-4">
       <div className="absolute inset-0 bg-slate-900/90 backdrop-blur-md" onClick={onClose}></div>
-      <div className="relative bg-white rounded-[3rem] shadow-2xl w-full max-w-6xl max-h-[90vh] overflow-hidden flex flex-col md:flex-row border border-white/20 animate-slide-up">
+      <div className="relative bg-white lg:rounded-[3rem] shadow-2xl w-full h-full lg:h-auto lg:max-w-6xl lg:max-h-[90vh] overflow-hidden flex flex-col md:flex-row border border-white/20 animate-slide-up">
         
         {/* Left Side: Form */}
-        <div className="flex-1 overflow-y-auto p-10 lg:p-16">
+        <div className="flex-1 overflow-y-auto p-8 lg:p-16">
           <div className="flex items-center justify-between mb-12">
             <div>
               <h2 className="text-4xl font-black text-slate-900 tracking-tighter">Checkout</h2>

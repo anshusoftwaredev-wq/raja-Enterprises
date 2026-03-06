@@ -4,11 +4,11 @@ import { Package, CreditCard, FileText, Truck, ChevronRight, X } from 'lucide-re
 
 export const B2BDashboard: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center lg:p-4 sm:p-6">
       <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-md" onClick={onClose}></div>
-      <div className="relative bg-white rounded-[2.5rem] shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden flex flex-col md:flex-row border border-white/20">
+      <div className="relative bg-white lg:rounded-[2.5rem] shadow-2xl w-full h-full lg:h-auto lg:max-w-5xl lg:max-h-[90vh] overflow-hidden flex flex-col md:flex-row border border-white/20">
         {/* Sidebar */}
-        <div className="w-full md:w-64 bg-slate-50 border-r border-slate-100 p-8">
+        <div className="w-full md:w-64 bg-slate-50 border-r border-slate-100 p-8 overflow-y-auto">
           <div className="mb-10">
             <h2 className="text-2xl font-black text-slate-900 tracking-tighter">B2B <span className="text-indigo-600">HUB</span></h2>
             <p className="text-xs text-slate-400 font-bold mt-1 uppercase tracking-widest">Retailer ID: RAJ-9921</p>

@@ -26,7 +26,6 @@ export const Navbar: React.FC<NavbarProps> = ({ cartCount, onCartClick, userMode
               <span className="text-lg font-black tracking-tighter text-slate-900 leading-none">
                 RAJA <span className="text-indigo-600">ENTERPRISES</span>
               </span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Premium Mobile Hub</span>
             </div>
           </div>
 
@@ -62,13 +61,13 @@ export const Navbar: React.FC<NavbarProps> = ({ cartCount, onCartClick, userMode
             )}
             <button 
               onClick={onProfileClick}
-              className="p-2.5 text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
+              className="hidden lg:flex p-2.5 text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
             >
               <User className="w-5 h-5" />
             </button>
             <button 
               onClick={onCartClick}
-              className="p-2.5 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 rounded-full transition-all relative"
+              className="hidden lg:flex p-2.5 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 rounded-full transition-all relative"
             >
               <ShoppingCart className="w-5 h-5" />
               {cartCount > 0 && (
@@ -76,6 +75,15 @@ export const Navbar: React.FC<NavbarProps> = ({ cartCount, onCartClick, userMode
                   {cartCount}
                 </span>
               )}
+            </button>
+            
+            {/* Mobile Mode Toggle */}
+            <button 
+              onClick={onToggleMode}
+              className="lg:hidden flex items-center gap-2 px-4 py-2 bg-slate-100 rounded-full text-[10px] font-black uppercase tracking-widest text-slate-600 border border-slate-200"
+            >
+              {userMode === 'retail' ? <Store className="w-3 h-3" /> : <Building2 className="w-3 h-3" />}
+              {userMode}
             </button>
           </div>
         </div>

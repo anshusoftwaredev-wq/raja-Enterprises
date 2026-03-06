@@ -14,6 +14,7 @@ interface ProfilePageProps {
   products: Product[];
   onToggleWishlist: (id: string) => void;
   onAddToCart: (p: Product) => void;
+  initialSection?: string;
 }
 
 export const ProfilePage: React.FC<ProfilePageProps> = ({ 
@@ -22,19 +23,20 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   wishlist, 
   products,
   onToggleWishlist,
-  onAddToCart
+  onAddToCart,
+  initialSection = 'personal'
 }) => {
-  const [activeSection, setActiveSection] = React.useState('personal');
+  const [activeSection, setActiveSection] = React.useState(initialSection);
 
   const wishlistProducts = products.filter(p => wishlist.includes(p.id));
 
   return (
-    <div className="fixed inset-0 z-[130] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[130] flex items-center justify-center lg:p-4">
       <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-xl" onClick={onClose}></div>
-      <div className="relative bg-white rounded-[3rem] shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden flex flex-col md:flex-row border border-white/20 animate-slide-up">
+      <div className="relative bg-white lg:rounded-[3rem] shadow-2xl w-full h-full lg:h-auto lg:max-w-5xl lg:max-h-[90vh] overflow-hidden flex flex-col md:flex-row border border-white/20 animate-slide-up">
         
         {/* Sidebar */}
-        <div className="w-full md:w-80 bg-slate-50 border-r border-slate-100 p-10 flex flex-col">
+        <div className="w-full md:w-80 bg-slate-50 border-r border-slate-100 p-8 lg:p-10 flex flex-col overflow-y-auto">
           <div className="flex flex-col items-center text-center mb-10">
             <div className="relative mb-6">
               <div className="w-32 h-32 rounded-[2.5rem] bg-gradient-to-br from-indigo-500 to-purple-600 p-1 shadow-2xl">
